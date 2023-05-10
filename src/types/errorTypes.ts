@@ -6,6 +6,6 @@ export const errorTypes = {
     return `The ${fieldName} should be minimum ${min} characters`;
   },
   notValidISINNumber: (): string => {
-    return `Not a valid ISINNumber`;
+    return 'Not a valid ISINNumber';
   }
 };
