@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import Header from '../Header.vue';
 
 describe('Header', () => {
-  it('Mounts properly', async () => {
+  it('Mounts properly', () => {
     const wrapper = mount(Header);
 
     expect(wrapper).toBeTruthy();
