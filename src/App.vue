@@ -7,11 +7,10 @@ import Button from '@/components/InputButton.vue';
 import '@/index.css';
 import '@/utils.css';
 import 'vue3-toastify/dist/index.css';
-import { formValidation } from './helpers/formValidation';
+import { formValidationStatus } from './helpers/formValidation';
 import { useFormStore } from './stores/formStore';
 
 const isinNumber = ref<string>('');
-const { error } = formValidation();
 
 const formStore = useFormStore();
 
@@ -31,7 +30,7 @@ const onSubmit = () => {
     <section class="test rounded">
       <form class="d-flex flex-col p-4" @submit.prevent="onSubmit">
         <TextField placeHolder="USXXXXX" v-model="isinNumber" type="text" label="ISIN Number" />
-        <Button :disable="!error.isFormValid">submit</Button>
+        <Button :disable="formValidationStatus.value">submit</Button>
       </form>
     </section>
   </main>

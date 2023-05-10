@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { formValidation } from '@/helpers/formValidation';
+import { formValidation } from '../helpers/formValidation';
 
 defineProps<{
   label: string;
@@ -10,10 +10,11 @@ defineProps<{
 }>();
 
 const isinNumber = ref<string>('');
-const { validateTextField, error } = formValidation();
+const errorMessage = ref<string>('');
 
 const validateInput = () => {
-  validateTextField('isinNumber', isinNumber.value);
+  const { error } = formValidation({ fieldName: 'isinNumber', fieldValue: isinNumber.value });
+  errorMessage.value = error.message;
 };
 </script>
 <template>
@@ -31,7 +32,7 @@ const validateInput = () => {
       @blur="validateInput"
     />
   </div>
-  <div class="pb-3" v-if="error.message" id="error">{{ error.message }}</div>
+  <div class="pb-3" v-if="errorMessage" id="error">{{ errorMessage }}</div>
 </template>
 
 <style lang="scss">
