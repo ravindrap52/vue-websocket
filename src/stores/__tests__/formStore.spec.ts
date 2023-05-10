@@ -7,11 +7,7 @@ describe('The user store', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });
-
-  it('should set ISIN Number', () => {
-    const formStore = useFormStore();
-    formStore.setISINNumber(isinNumber);
-  });
+  
   it('state should have the same isinNumber as set', () => {
     const formStore = useFormStore();
     formStore.setISINNumber(isinNumber);
