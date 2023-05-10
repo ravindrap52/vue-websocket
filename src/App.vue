@@ -1,28 +1,28 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import { toast } from 'vue3-toastify';
-import Header from '@/components/Header.vue'
-import TextField from '@/components/TextField.vue'
-import Button from '@/components/InputButton.vue'
-import { formValidation } from './helpers/formValidation'
-import { useFormStore } from './stores/formStore'
-import '@/index.css'
-import '@/utils.css'
+import Header from '@/components/Header.vue';
+import TextField from '@/components/TextField.vue';
+import Button from '@/components/InputButton.vue';
+import '@/index.css';
+import '@/utils.css';
 import 'vue3-toastify/dist/index.css';
+import { formValidation } from './helpers/formValidation';
+import { useFormStore } from './stores/formStore';
 
-const isinNumber = ref<string>('')
-const { error } = formValidation()
+const isinNumber = ref<string>('');
+const { error } = formValidation();
 
-const formStore = useFormStore()
+const formStore = useFormStore();
 
 const onSubmit = () => {
-  const isinNumbers = formStore.getISINNumbers
+  const isinNumbers = formStore.getISINNumbers;
   if (isinNumbers.includes(isinNumber.value)) {
     toast.error(`${isinNumber.value} already exists`);
   } else {
-    formStore.setISINNumber(isinNumber.value)
+    formStore.setISINNumber(isinNumber.value);
   }
-}
+};
 </script>
 
 <template>

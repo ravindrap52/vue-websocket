@@ -1,11 +1,11 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
+import App from './App.vue';
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(createPinia())
+app.use(createPinia());
 app.use(Vue3Toastify, {
   autoClose: 1000,
   position: 'top-right',
@@ -13,5 +13,5 @@ app.use(Vue3Toastify, {
     opacity: '1',
     userSelect: 'initial'
   }
-} as ToastContainerOptions)
-app.mount('#app')
+} as ToastContainerOptions);
+app.mount('#app');

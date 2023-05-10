@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { formValidation } from '../helpers/formValidation'
+import { ref } from 'vue';
+import { formValidation } from '@/helpers/formValidation';
 
 defineProps<{
-  label: string
-  placeHolder: string
-  modelValue: string | number
-}>()
+  label: string;
+  placeHolder: string;
+  modelValue: string | number;
+  type: string;
+}>();
 
-const isinNumber = ref<string>('')
-const { validateTextField, error } = formValidation()
+const isinNumber = ref<string>('');
+const { validateTextField, error } = formValidation();
 
 const validateInput = () => {
-  validateTextField('isinNumber', isinNumber.value)
-}
+  validateTextField('isinNumber', isinNumber.value);
+};
 </script>
 <template>
   <div class="d-flex flex-col pt-3 pb-3">
@@ -30,7 +31,7 @@ const validateInput = () => {
       @blur="validateInput"
     />
   </div>
-  <div class="pb-3" v-if="error.message">{{ error.message }}</div>
+  <div class="pb-3" v-if="error.message" id="error">{{ error.message }}</div>
 </template>
 
 <style lang="scss">
