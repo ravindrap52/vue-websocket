@@ -1,25 +1,43 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import Header from '@/components/Header.vue';
 import TextField from '@/components/TextField.vue';
 import Button from '@/components/InputButton.vue';
 import '@/index.css';
 import '@/utils.css';
-import 'vue3-toastify/dist/index.css';
-import { formValidationStatus } from './helpers/formValidation';
-import { useFormStore } from './stores/formStore';
+import { formValidationStatus } from '@/helpers/formValidation';
+import { useFormStore } from '@/stores/formStore';
+import { initiateWebsocketConnection } from '@/helpers/websocket';
+import { storeToRefs } from 'pinia';
 
 const isinNumber = ref<string>('');
 
+const mySubscriptions = reactive<{
+  [i:string]:{
+    isin: string,
+    bid: string
+  }[]
+}>({
+
+})
+
 const formStore = useFormStore();
 
+const { isinNumbers } = storeToRefs(useFormStore());
+
 const onSubmit = () => {
-  const isinNumbers = formStore.getISINNumbers;
-  if (isinNumbers.includes(isinNumber.value)) {
+  // const isinNumbers = isinNumbers.value;
+  if (isinNumbers.value.includes(isinNumber.value)) {
     toast.error(`${isinNumber.value} already exists`);
   } else {
     formStore.setISINNumber(isinNumber.value);
+    
+    const subject = initiateWebsocketConnection(isinNumber.value);
+    subject.subscribe((event) => {
+      mySubscriptions[event.isin].push(event);
+    })
   }
 };
 </script>

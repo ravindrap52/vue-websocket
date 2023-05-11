@@ -1,21 +1,14 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-interface State {
-  isinNumbers: string[];
-}
 
-export const useFormStore = defineStore('formStore', {
-  state: (): State => {
-    return {
-      isinNumbers: []
-    };
-  },
-  getters: {
-    getISINNumbers: (state) => state.isinNumbers
-  },
-  actions: {
-    setISINNumber(isinNumber: string) {
-      this.isinNumbers.push(isinNumber);
+
+export const useFormStore = defineStore('formStore', () => {
+  const isinNumbers = ref<string[]>([]);
+  return {
+    isinNumbers,
+    setISINNumber(_isinNumber: string) {
+      isinNumbers.value.push(_isinNumber);
     }
   }
 });
