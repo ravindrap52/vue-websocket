@@ -9,19 +9,12 @@ import '@/index.css';
 import '@/utils.css';
 import { formValidationStatus } from '@/helpers/formValidation';
 import { useFormStore } from '@/stores/formStore';
-import { initiateWebsocketConnection } from '@/helpers/websocket';
+import { initiateWebsocketConnection } from './helpers/websocket';
 import { storeToRefs } from 'pinia';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 const isinNumber = ref<string>('');
 
-const mySubscriptions = reactive<{
-  [i:string]:{
-    isin: string,
-    bid: string
-  }[]
-}>({
-
-})
 
 const formStore = useFormStore();
 
@@ -33,11 +26,10 @@ const onSubmit = () => {
     toast.error(`${isinNumber.value} already exists`);
   } else {
     formStore.setISINNumber(isinNumber.value);
-    
-    const subject = initiateWebsocketConnection(isinNumber.value);
-    subject.subscribe((event) => {
-      mySubscriptions[event.isin].push(event);
-    })
+    const subject = initiateWebsocketConnection() as WebSocketSubject<any>;
+    subject.subscribe();
+    subject.next({subscribe: isinNumber.value});
+    formStore.subscribeToISINNumber(subject);
   }
 };
 </script>
